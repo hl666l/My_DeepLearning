@@ -24,6 +24,7 @@ mode_path = '/home/helei/PycharmProjects/My_DeepLearning/Model_space'
 model_name = 'model.pk'
 img_size = 208
 img_path = '/home/helei/PycharmProjects/My_DeepLearning/Data_space/AugmentedAlzheimerDataset/*/*.jpg'
+img_save_path = '/home/helei/PycharmProjects/My_DeepLearning/Code_space/img/'
 BATCH_SIZE = 400
 # 使用glob方法来获取数据图片的所有路径
 all_imgs_path = glob.glob(img_path)
@@ -54,4 +55,4 @@ if torch.cuda.is_available():
 
 if __name__ == '__main__':
     myFunction.Train_Function(epoch, model, train_dl, loss, optimizer, step_number, model_path=mode_path,
-                              model_save_name=model_name)
+                              model_save_name=model_name, img_save_path=img_save_path)

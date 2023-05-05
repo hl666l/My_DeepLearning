@@ -188,7 +188,7 @@ def View_correct(X_axis, Y_axis, correct_save_path, X_label='Epoch', Y_label='Ac
 
 
 def Train_Function(Epoch, model, Train_Data, lossFunction, optimizer, Step_number, model_path, model_save_name,
-                   save_path):
+                   img_save_path):
     """
     训练函数
     :param model_path: 模型保存地址
@@ -224,7 +224,7 @@ def Train_Function(Epoch, model, Train_Data, lossFunction, optimizer, Step_numbe
 
                 if step % 70 == 69:  # step 每500个batch 画一次图
                     title = ('epoch=%d step=%d loss=%.4f ' % (epoch, step, loss.cpu()))
-                    View_loss(X_axis, Y_axis, X_label, Y_label, title, save_path)
+                    View_loss(X_axis, Y_axis, X_label, Y_label, title, img_save_path)
             # Out_Put_loss(epoch, step, Step_number, loss)
     torch.save(model.state_dict(), model_path + '/' + model_save_name)
 
@@ -305,6 +305,3 @@ def Train_Tets_Function(Epoch, model, Train_Data, lossFunction, optimizer, model
         View_loss(X_axis, Y_axis, X_label, Y_label, title, save_path)
         test_accuracy_img(epoch_list, Test_data, number_test_data, model, lossFunction, correct_list, correct_save_path)
     torch.save(model.state_dict(), model_path + '/' + model_save_name)
-
-
-pass
