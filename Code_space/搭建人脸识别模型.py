@@ -19,7 +19,7 @@ BATCH_SIZE：每个batch的大小
 """
 species_path = '/home/helei/PycharmProjects/My_DeepLearning/Data_space/CelebDataProcessed/*'
 scale = 0.8
-epoch = 60
+epoch = 35
 step_number = 200
 model_path = '/home/helei/PycharmProjects/My_DeepLearning/Model_space'
 model_name = 'FC.pk'
@@ -53,3 +53,40 @@ loss = torch.nn.CrossEntropyLoss()
 if __name__ == '__main__':
     myFunction.Train_Tets_Function(epoch, model, train_dl, loss, optimizer, model_path,
                                    model_name, test_dl, s, save_path, correct_path)
+"""
+epoch: 0 Accuracy:0.06
+epoch: 1 Accuracy:0.15
+epoch: 2 Accuracy:0.25
+epoch: 3 Accuracy:0.38
+epoch: 4 Accuracy:0.44
+epoch: 5 Accuracy:0.53
+epoch: 6 Accuracy:0.55
+epoch: 7 Accuracy:0.59
+epoch: 8 Accuracy:0.56
+epoch: 9 Accuracy:0.67
+epoch: 10 Accuracy:0.69
+epoch: 11 Accuracy:0.69
+epoch: 12 Accuracy:0.71
+epoch: 13 Accuracy:0.71
+epoch: 14 Accuracy:0.71
+epoch: 15 Accuracy:0.71
+epoch: 16 Accuracy:0.72
+epoch: 17 Accuracy:0.72
+epoch: 18 Accuracy:0.71
+epoch: 19 Accuracy:0.72
+epoch: 20 Accuracy:0.72
+epoch: 21 Accuracy:0.72
+epoch: 22 Accuracy:0.72
+epoch: 23 Accuracy:0.72
+epoch: 24 Accuracy:0.72
+epoch: 25 Accuracy:0.71
+epoch: 26 Accuracy:0.71
+epoch: 27 Accuracy:0.72
+epoch: 28 Accuracy:0.72
+epoch: 29 Accuracy:0.72
+epoch: 30 Accuracy:0.72
+epoch: 31 Accuracy:0.72
+epoch: 32 Accuracy:0.73
+epoch: 33 Accuracy:0.72
+epoch: 34 Accuracy:0.73
+"""
