@@ -1,12 +1,12 @@
 import torch.nn as nn
 import torch
 import torch.utils.data as Data
+from sklearn.datasets import load_iris
+import pandas as pd
+import numpy as np
 
 
 def getdata():
-    from sklearn.datasets import load_iris
-    import pandas as pd
-    import numpy as np
     train_data = load_iris()
     data = train_data['data']
     labels = train_data['target'].reshape(-1, 1)
@@ -67,5 +67,3 @@ if __name__ == '__main__':
     target_y = torch.from_numpy(test_y).long().data.numpy()
     accuracy = float((pred_y == target_y).astype(int).sum()) / float(target_y.size)
     print("莺尾花预测准确率", accuracy)
-
-
