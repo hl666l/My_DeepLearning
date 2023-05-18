@@ -143,7 +143,7 @@ def Data_To_Cuda(data):
     """
     my_data = data
     if torch.cuda.is_available():
-        my_data = my_data.cuda()
+        my_data = my_data.cuda(non_blocking=True)
     else:
         print('No device use')
     return my_data
@@ -183,7 +183,7 @@ def View_correct(X_axis, Y_axis, correct_save_path, X_label='Epoch', Y_label='Ac
     plt.plot(X_axis, Y_axis, 'r-', lw=1)
     plt.xlabel(X_label)
     plt.ylabel(Y_label)
-    plt.savefig(correct_save_path + str(X_axis[-1])+'正确率' + '.png')
+    plt.savefig(correct_save_path + str(X_axis[-1]) + '正确率' + '.png')
     plt.pause(0.2)
 
 
@@ -266,8 +266,50 @@ def test_accuracy_img(epoch_list, test_data, number_data, model, lossFunction, c
     View_correct(epoch_list, correct_axis, save_path)
 
 
-def Train_Tets_Function(Epoch, model, Train_Data, lossFunction, optimizer, model_path, model_save_name, Test_data,
+def Train_Tets_Function2(Epoch, model, Train_Data, lossFunction, optimizer, model_path, model_save_name, Test_data,
                         number_test_data, save_path, correct_save_path):
+    """
+    训练函数
+    :param save_path:
+    :param model_path: 模型保存地址
+    :param Epoch: 训练轮数
+    :param model: 模型
+    :param Train_Data:训练数据
+    :param lossFunction:损失函数
+    :param optimizer:优化器
+    :param Step_number:一轮中多少步输出一次
+    :param model_save_name: 模型保存时的名称
+    :return: 无返回
+    """
+    X_axis = [0]
+    Y_axis = [0]
+    X_label = 'rate of progress'
+    Y_label = 'loss'
+    epoch_list = []
+    correct_list = []
+    for epoch in range(Epoch):
+        epoch_list.append(epoch)
+        for step, (train_data, train_labels) in enumerate(Train_Data):
+            # 数据扔到cuda中
+            train_data = Data_To_Cuda(train_data)
+            train_labels = Data_To_Cuda(train_labels)
+
+            y = model(train_data)
+            loss = lossFunction(y, train_labels)
+            loss.backward()
+            if (step+1) % 2 :
+                optimizer.step()
+                optimizer.zero_grad()
+        Y_axis.append(loss.cpu().tolist())
+        X_axis.append(X_axis[len(X_axis) - 1] + 1)
+        title = ('epoch=%d  loss=%.4f ' % (epoch, loss.cpu()))
+        View_loss(X_axis, Y_axis, X_label, Y_label, title, save_path)
+        test_accuracy_img(epoch_list, Test_data, number_test_data, model, lossFunction, correct_list, correct_save_path)
+    torch.save(model.state_dict(), model_path + '/' + model_save_name)
+
+
+def Train_Tets_Function(Epoch, model, Train_Data, lossFunction, optimizer, model_path, model_save_name, Test_data,
+                         number_test_data, save_path, correct_save_path):
     """
     训练函数
     :param save_path:
